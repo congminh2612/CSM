@@ -23,7 +23,7 @@ const Header = () => {
           display: md ? "none" : "flex",
           justifyContent: "",
           paddingLeft: "60px",
-          width: lg ? "50%" : "72%",
+          width: lg ? "50%" : "70%",
         }}
       >
         <TypographyCustom>Dashboard</TypographyCustom>
@@ -36,7 +36,7 @@ const Header = () => {
           display: "flex",
           paddingLeft: lg ? "40px" : "60px",
           justifyContent: "space-between",
-          width: lg ? "10%" : "16%",
+          width: lg ? "10%" : "18%",
         }}
       >
         <Box

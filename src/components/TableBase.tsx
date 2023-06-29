@@ -200,7 +200,7 @@ const TableBase = () => {
           <Box
             sx={{
               display: sm ? "none" : "flex",
-              pl: lg ? "" : "240px",
+              pl: lg ? "" : "200px",
               width: lg ? "20%" : "50%",
             }}
           >
@@ -209,7 +209,7 @@ const TableBase = () => {
           </Box>
           <Box
             sx={{
-              pl: lg ? "10px" : "240px",
+              pl: lg ? "10px" : "70px",
               display: "flex",
               justifyContent: "end",
             }}
