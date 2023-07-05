@@ -63,7 +63,7 @@ const DashBoard = () => {
                     m: "10px",
                     p: 2,
                     border: "1px solid #ccc",
-                    height: "600px",
+                    height: "660px",
                   }}
                 >
                   <Typography>No data</Typography>
