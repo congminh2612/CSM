@@ -1,37 +1,31 @@
-import { styled, useTheme } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import {
   Box,
   Button,
   FormControl,
-  IconButton,
   InputBase,
-  InputLabel,
+  Modal,
   NativeSelect,
   Pagination,
+  Paper,
   Stack,
-  TableFooter,
-  TablePagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
-  colors,
+  styled,
+  tableCellClasses,
   useMediaQuery,
 } from "@mui/material";
+import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import AppShortcutOutlinedIcon from "@mui/icons-material/AppShortcutOutlined";
-import { useState } from "react";
-import { originalRows } from "./constant";
-import LastPageIcon from "@mui/icons-material/LastPage";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
+import { Rows } from "./constant";
+import ModalProduct from "./ModalProduct";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,7 +36,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }));
-
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(even)": {
     backgroundColor: "#e3f2fd",
@@ -53,41 +46,35 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-interface TablePaginationActionsProps {
-  count: number;
-  page: number;
-  rowsPerPage: number;
-  onPageChange: (
-    event: React.MouseEvent<HTMLButtonElement>,
-    newPage: number
-  ) => void;
+interface Product {
+  productName: string;
+  active: string;
+  productCode: string;
+  HsCode: string;
+  Category: string;
+  SubCategory: string;
 }
 
-interface User {
-  email: string;
-  title: string;
-  role: string;
-  action: string;
-}
+const styleModal = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 1150,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+};
 
-const TableBase = () => {
-  const sm = useMediaQuery("(max-width: 640px)");
-  const md = useMediaQuery("(max-width: 768px)");
-  const lg = useMediaQuery("(max-width: 1024px)");
-
+const TableProduct = () => {
   const [columns, setColumns] = useState("");
-  const [rows, setRows] = useState<User[]>(originalRows);
-  const [searched, setSearched] = useState<string>("");
-
-  const requestSearch = (searchedVal: string) => {
-    setRows(originalRows.filter((item) => item.email.includes(searchedVal)));
-  };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleChange = (event: { target: { value: string } }) => {
     setColumns(event.target.value);
   };
-
-  // Avoid a layout jump when reaching the last page with empty rows.
 
   return (
     <Box
@@ -97,32 +84,28 @@ const TableBase = () => {
         border: "1px solid #eee",
       }}
     >
-      <Box
+      <Stack
+        direction={{ md: "column", lg: "row" }}
+        spacing={{ sm: 1, lg: 5, xl: 25 }}
         sx={{
-          display: lg ? "block" : "flex",
-          alignItems: "center",
-          pb: "20px",
+          py: "20px",
+          minWidth: 700,
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            width: lg ? "100%" : "50%",
+        <Stack
+          direction={{
+            sm: "column",
+            md: "row",
           }}
+          spacing={4}
         >
           <Box
             sx={{
               p: "16px 16px 16px 0",
               position: "relative",
-              width: lg ? "25%" : "30%",
             }}
           >
             <InputBase
-              value={searched}
-              onChange={(e) => {
-                setSearched(e.target.value);
-                requestSearch(e.target.value);
-              }}
               sx={{
                 width: "240px",
                 backgroundColor: "#eee",
@@ -158,16 +141,9 @@ const TableBase = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              pl: "80px",
             }}
           >
-            <Typography
-              sx={{
-                display: lg ? "none" : "",
-              }}
-            >
-              Columns:
-            </Typography>
+            <Typography>Columns:</Typography>
             <FormControl sx={{ m: 1 }}>
               <NativeSelect
                 value={columns}
@@ -190,35 +166,31 @@ const TableBase = () => {
               </NativeSelect>
             </FormControl>
           </Box>
-        </Box>
-        <Box
+        </Stack>
+
+        <Stack
+          direction="row"
+          spacing={{ sm: 10, lg: 20, xl: 20 }}
           sx={{
-            display: "flex",
-            alignItems: "center",
+            pt: "20px",
           }}
         >
           <Box
             sx={{
-              display: sm ? "none" : "flex",
-              pl: lg ? "" : "200px",
-              width: lg ? "20%" : "50%",
+              display: "flex",
+              pt: "5px",
             }}
           >
             <FilterAltOutlinedIcon color="error" />
             <Typography color="error"> Filters </Typography>
           </Box>
-          <Box
-            sx={{
-              pl: lg ? "10px" : "70px",
-              display: "flex",
-              justifyContent: "end",
-            }}
-          >
+          <Stack direction="row" spacing={10}>
             <Button
               variant="contained"
               color="error"
               sx={{
                 width: "100px",
+                height: "35px",
                 borderRadius: "40px",
                 textTransform: "capitalize",
               }}
@@ -235,9 +207,11 @@ const TableBase = () => {
             <Button
               variant="contained"
               color="error"
+              onClick={handleOpen}
               sx={{
-                width: "140px",
+                width: "160px",
                 borderRadius: "40px",
+                height: "35px",
                 textTransform: "capitalize",
                 ml: "40px",
               }}
@@ -248,24 +222,36 @@ const TableBase = () => {
                   pl: "4px",
                 }}
               >
-                Invite User
+                Add Product
               </Typography>
             </Button>
-          </Box>
+          </Stack>
+        </Stack>
+      </Stack>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={styleModal}>
+          <ModalProduct />
         </Box>
-      </Box>
+      </Modal>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Email</StyledTableCell>
-              <StyledTableCell align="right">Title</StyledTableCell>
-              <StyledTableCell align="center">Role</StyledTableCell>
-              <StyledTableCell align="center">Action</StyledTableCell>
+              <StyledTableCell>Product Name</StyledTableCell>
+              <StyledTableCell align="center">Active</StyledTableCell>
+              <StyledTableCell align="center">Product Code</StyledTableCell>
+              <StyledTableCell align="center">HS Code</StyledTableCell>
+              <StyledTableCell align="center">Category</StyledTableCell>
+              <StyledTableCell align="center">Sub Category</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {Rows.map((row, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell
                   sx={{
@@ -274,17 +260,23 @@ const TableBase = () => {
                   component="th"
                   scope="row"
                 >
-                  {row.email}
+                  {row.productName}
                 </StyledTableCell>
-                <StyledTableCell align="center">{row.title}</StyledTableCell>
-                <StyledTableCell align="center">{row.role}</StyledTableCell>
+                <StyledTableCell align="center">{row.active}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.productCode}
+                </StyledTableCell>
                 <StyledTableCell
                   sx={{
                     color: "blue",
                   }}
                   align="center"
                 >
-                  {row.action}
+                  {row.hsCode}
+                </StyledTableCell>
+                <StyledTableCell align="center">{row.category}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.subCategory}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -308,4 +300,4 @@ const TableBase = () => {
   );
 };
 
-export default TableBase;
+export default TableProduct;

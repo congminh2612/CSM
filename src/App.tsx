@@ -1,12 +1,15 @@
-import Content from "./components/Content";
-import Header from "./components/Header";
+import { Route, Routes } from "react-router-dom";
+import UserScreen from "./features/UserScreen";
+import ProductsScreen from "./features/ProductsScreen";
+import OverViewScreen from "./features/OverViewScreen";
 
 function App() {
   return (
-    <div>
-      <Header />
-      <Content />
-    </div>
+    <Routes>
+      <Route path="/" element={<UserScreen />} />
+      <Route path="/product" element={<ProductsScreen />} />
+      <Route path="/overview" element={<OverViewScreen />} />
+    </Routes>
   );
 }
 

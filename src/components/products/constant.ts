@@ -1,0 +1,42 @@
+export const Rows = [
+  {
+    productName: "Sweater",
+    active: "Active",
+    productCode: "",
+    hsCode: "",
+    category: "Apparel",
+    subCategory: "hqwjeqwuyqw",
+  },
+  {
+    productName: "Sweater",
+    active: "Active",
+    productCode: "",
+    hsCode: "",
+    category: "Apparel",
+    subCategory: "hqwjeqwuyqw",
+  },
+  {
+    productName: "Sweater",
+    active: "Active",
+    productCode: "",
+    hsCode: "",
+    category: "Apparel",
+    subCategory: "hqwjeqwuyqw",
+  },
+  {
+    productName: "Sweater",
+    active: "Active",
+    productCode: "",
+    hsCode: "",
+    category: "Apparel",
+    subCategory: "hqwjeqwuyqw",
+  },
+  {
+    productName: "Sweater",
+    active: "Active",
+    productCode: "",
+    hsCode: "",
+    category: "Apparel",
+    subCategory: "hqwjeqwuyqw",
+  },
+];

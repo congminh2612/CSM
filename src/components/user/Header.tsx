@@ -12,7 +12,7 @@ const Header = () => {
         boxShadow: 1,
         height: "80px",
         alignItems: "center",
-        padding: lg ? "0 20px" : "0 40px",
+        padding: lg ? "0 20px" : "0 100px 0 40px",
       }}
     >
       <Box>
