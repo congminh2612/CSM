@@ -1,6 +1,7 @@
 import { Box, Typography, styled, useMediaQuery } from "@mui/material";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { Link } from "react-router-dom";
 const Header = () => {
   const sm = useMediaQuery("(max-width: 640px)");
   const md = useMediaQuery("(max-width: 768px)");
@@ -26,9 +27,16 @@ const Header = () => {
           width: lg ? "50%" : "70%",
         }}
       >
-        <TypographyCustom>Dashboard</TypographyCustom>
-        <TypographyCustom>Products</TypographyCustom>
-        <TypographyCustom>Orders</TypographyCustom>
+        <Link to="/">
+          {" "}
+          <TypographyCustom>Dashboard</TypographyCustom>
+        </Link>
+        <Link to="/product">
+          <TypographyCustom>Products</TypographyCustom>
+        </Link>
+        <Link to="/overview">
+          <TypographyCustom>Orders</TypographyCustom>
+        </Link>
       </Box>
 
       <Box
